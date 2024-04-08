@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StorySegment } from "@/types/types";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -18,29 +18,6 @@ export default function StoryBlock({
   const handleOptionClick = (leadsTo: number) => {
     setCurrentSegmentID(leadsTo);
   };
-
-  // Function to preload images
-  const preloadImages = (segmentIDs: any[]) => {
-    segmentIDs.forEach((id: number) => {
-      const segment = StorySegmentsData.find(
-        (segment) => segment.segmentID === id
-      );
-      if (segment && segment.imageLink) {
-        const img = new window.Image();
-        img.src = segment.imageLink;
-      }
-    });
-  };
-
-  // Effect to preload images for the next possible segments
-  useEffect(() => {
-    if (currentSegment && currentSegment.options) {
-      const nextSegmentIDs = currentSegment.options.map(
-        (option) => option.leadsTo
-      );
-      preloadImages(nextSegmentIDs);
-    }
-  }, [currentSegmentID, StorySegmentsData]);
 
   return (
     <div className="mb-5 mt-5">
