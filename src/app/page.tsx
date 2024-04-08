@@ -6,8 +6,8 @@ export default async function Home() {
   const StorySegmentsData = (await getLocalData()) as StorySegment[];
 
   return (
-    <div className="wrapper">
+    <main className="wrapper">
       <StoryBlock StorySegmentsData={StorySegmentsData} />
-    </div>
+    </main>
   );
 }
