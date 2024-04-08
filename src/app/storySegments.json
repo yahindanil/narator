@@ -1,0 +1,58 @@
+[
+  {
+    "segmentID": 1,
+    "header": "The Kitchen",
+    "text": "You are in a cozy kitchen. There's a door leading to the corridor.",
+    "imageLink": "/images/kitchen.jpg",
+    "options": [
+      {
+        "text": "Go to the corridor.",
+        "leadsTo": 2
+      }
+    ]
+  },
+  {
+    "segmentID": 2,
+    "header": "The Corridor",
+    "text": "You are in a long corridor. Doors lead to the kitchen, a bedroom, and a living room.",
+    "imageLink": "/images/corridor.jpeg",
+    "options": [
+      {
+        "text": "Go back to the kitchen.",
+        "leadsTo": 1
+      },
+      {
+        "text": "Enter the bedroom.",
+        "leadsTo": 3
+      },
+      {
+        "text": "Enter the living room.",
+        "leadsTo": 4
+      }
+    ]
+  },
+  {
+    "segmentID": 3,
+    "header": "The Bedroom",
+    "text": "You are in a peaceful bedroom. There's a door leading back to the corridor.",
+    "imageLink": "/images/bedroom.jpg",
+    "options": [
+      {
+        "text": "Go back to the corridor.",
+        "leadsTo": 2
+      }
+    ]
+  },
+  {
+    "segmentID": 4,
+    "header": "The Living Room",
+    "text": "You are in a spacious living room. There's a door leading back to the corridor.",
+    "imageLink": "/images/livingRoom.jpg",
+    "options": [
+      {
+        "text": "Go back to the corridor.",
+        "leadsTo": 2
+      }
+    ]
+  }
+]
