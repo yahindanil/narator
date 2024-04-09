@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StorySegment } from "@/types/types";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
+import PreloadImages from "./PreloadImages";
 
 export default function StoryBlock({
   StorySegmentsData,
@@ -11,6 +12,8 @@ export default function StoryBlock({
   StorySegmentsData: StorySegment[];
 }) {
   const [currentSegmentID, setCurrentSegmentID] = useState(1);
+  const [imgUrlsToPreload, setImgUrlsToPreload] = useState() as any;
+
   const currentSegment = StorySegmentsData.find(
     (segment) => segment.segmentID == currentSegmentID
   );
@@ -18,6 +21,24 @@ export default function StoryBlock({
   const handleOptionClick = (leadsTo: number) => {
     setCurrentSegmentID(leadsTo);
   };
+
+  const getNextSegments = (currentSegment: StorySegment) => {
+    const segmentsToPreload = StorySegmentsData.filter((segment) =>
+      currentSegment.options.some(
+        (option) => option.leadsTo === segment.segmentID
+      )
+    );
+
+    const imgURLs = segmentsToPreload.map((segment) => segment.imageLink);
+
+    setImgUrlsToPreload(imgURLs);
+  };
+
+  useEffect(() => {
+    if (currentSegment && currentSegment.options) {
+      getNextSegments(currentSegment);
+    }
+  }, [currentSegment]);
 
   return (
     <div className="mb-5 mt-5">
@@ -36,6 +57,9 @@ export default function StoryBlock({
               className="rounded-md object-cover"
               priority={true}
             />
+            {imgUrlsToPreload && (
+              <PreloadImages imagesURLs={imgUrlsToPreload} />
+            )}
           </AspectRatio>
           <p className="mb-3">{currentSegment.text}</p>
           <div>
