@@ -12,7 +12,7 @@ export default function StoryBlock({
   StorySegmentsData: StorySegment[];
 }) {
   const [currentSegmentID, setCurrentSegmentID] = useState(1);
-  const [imgUrlsToPreload, setImgUrlsToPreload] = useState() as any;
+  const [imgUrlsToPreload, setImgUrlsToPreload] = useState<string[]>([]);
 
   const currentSegment = StorySegmentsData.find(
     (segment) => segment.segmentID == currentSegmentID
@@ -22,7 +22,7 @@ export default function StoryBlock({
     setCurrentSegmentID(leadsTo);
   };
 
-  const getNextSegments = (currentSegment: StorySegment) => {
+  const getImgUrlsToPreload = (currentSegment: StorySegment) => {
     const segmentsToPreload = StorySegmentsData.filter((segment) =>
       currentSegment.options.some(
         (option) => option.leadsTo === segment.segmentID
@@ -30,13 +30,12 @@ export default function StoryBlock({
     );
 
     const imgURLs = segmentsToPreload.map((segment) => segment.imageLink);
-
-    setImgUrlsToPreload(imgURLs);
+    return imgURLs;
   };
 
   useEffect(() => {
     if (currentSegment && currentSegment.options) {
-      getNextSegments(currentSegment);
+      setImgUrlsToPreload(getImgUrlsToPreload(currentSegment));
     }
   }, [currentSegment]);
 
